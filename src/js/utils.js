@@ -40,6 +40,7 @@ export async function copyToClipboard(text) {
 let activeMapInstance = null;
 let activeMarker = null;
 let activeTileLayer = null;
+const DEFAULT_ZOOM = 6; // 默认地图缩放级别，数值越小显示的范围越大（原为 11）
 
 function getTileUrl() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -63,7 +64,7 @@ export function renderMap(mapId, lat, lng, popupText = "大致位置") {
 
   if (activeMapInstance) {
     // If map already exists, update center, marker and tiles
-    activeMapInstance.setView([latitude, longitude], 11);
+    activeMapInstance.setView([latitude, longitude], DEFAULT_ZOOM);
     if (activeTileLayer) {
       activeTileLayer.setUrl(tileUrl);
     }
@@ -81,7 +82,7 @@ export function renderMap(mapId, lat, lng, popupText = "大致位置") {
   activeMapInstance = L.map(mapId, {
     zoomControl: true,
     scrollWheelZoom: false
-  }).setView([latitude, longitude], 11);
+  }).setView([latitude, longitude], DEFAULT_ZOOM);
 
   // Load appropriate theme tiles
   activeTileLayer = L.tileLayer(tileUrl, {
