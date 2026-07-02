@@ -527,3 +527,112 @@ code {
   color: var(--text-primary);
 }
 
+/* VPN Ad Card Styling */
+.vpn-ad-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 2.5rem 0;
+  border-color: rgba(99, 102, 241, 0.2);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, rgba(168, 85, 247, 0.04) 100%), var(--bg-card);
+}
+
+.vpn-ad-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.12);
+}
+
+.vpn-ad-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.vpn-ad-content h2 {
+  font-family: var(--font-sans);
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.vpn-ad-content p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 650px;
+}
+
+.vpn-ad-content p strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.vpn-ad-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  background: var(--grad-primary);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  border: none;
+  margin-top: 0.5rem;
+}
+
+.vpn-ad-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  color: #ffffff !important;
+  opacity: 0.95;
+}
+
+.vpn-ad-image-container {
+  width: 240px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vpn-ad-image-container svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vpn-ad-card {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .vpn-ad-content {
+    align-items: center;
+  }
+
+  .vpn-ad-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .vpn-ad-image-container {
+    width: 200px;
+    height: 140px;
+  }
+}
+

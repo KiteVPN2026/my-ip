@@ -73,6 +73,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadedIpData = data;
     renderIpData(data);
 
+    if (data && data.country) {
+      sessionStorage.setItem("user_country", data.country);
+      if (window.i18n && typeof window.i18n.initVpnAd === "function") {
+        window.i18n.initVpnAd();
+      }
+    }
+
   } catch (error) {
     console.error("Error loading IP data:", error);
     renderErrorState();

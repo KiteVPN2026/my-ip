@@ -139,7 +139,10 @@ export const TRANSLATIONS = {
     unknown_value: "未知",
     unknown_colo: "未知",
     failed_value: "无法获取",
-    failed_title: "获取失败"
+    failed_title: "获取失败",
+    vpn_ad_title: "使用 KiteVPN 保护您的隐私",
+    vpn_ad_desc: "采用最新的 <strong>Vless-Reality</strong> 协议，抗干扰性极强。为您提供专为中国地区优化的亚太专属高速线路，有效隐藏您的 IP 并保护在线隐私。",
+    vpn_ad_btn: "免费获取 KiteVPN"
   },
   en: {
     // Nav & Common
@@ -279,7 +282,10 @@ export const TRANSLATIONS = {
     unknown_value: "Unknown",
     unknown_colo: "Unknown",
     failed_value: "Unavailable",
-    failed_title: "Failed"
+    failed_title: "Failed",
+    vpn_ad_title: "Browse privately with KiteVPN",
+    vpn_ad_desc: "Stop Big Tech, ISPs, and marketers from using your IP to track your location and online activities. Hide your IP address and protect your personal data and privacy with KiteVPN.",
+    vpn_ad_btn: "Get KiteVPN Free"
   },
   ru: {
     // Nav & Common
@@ -419,7 +425,10 @@ export const TRANSLATIONS = {
     unknown_value: "Неизвестно",
     unknown_colo: "Неизвестно",
     failed_value: "Не удалось получить",
-    failed_title: "Ошибка получения"
+    failed_title: "Ошибка получения",
+    vpn_ad_title: "Просматривайте сайты конфиденциально с KiteVPN",
+    vpn_ad_desc: "Использование новейшего протокола <strong>Vless-Reality</strong> обеспечивает высокую устойчивость к помехам. Доступны эксклюзивные европейские линии, оптимизированные для России, которые скроют ваш IP и защитят вашу конфиденциальность в сети.",
+    vpn_ad_btn: "Получить KiteVPN бесплатно"
   }
 };
 
@@ -512,11 +521,41 @@ if (!currentLang) {
   localStorage.setItem("lang", currentLang);
 }
 
+// 统一处理 VPN 广告链接
+export async function initVpnAd() {
+  const vpnLink = document.getElementById("vpn-ad-link");
+  if (!vpnLink) return;
+
+  // 尝试从 sessionStorage 获取已缓存的国家代码
+  let country = sessionStorage.getItem("user_country");
+  if (!country) {
+    try {
+      const response = await fetch("/api/myip");
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.country) {
+          country = data.country;
+          sessionStorage.setItem("user_country", country);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to fetch country for VPN ad:", e);
+    }
+  }
+
+  if (country === "CN") {
+    vpnLink.href = "https://kitepro.vip";
+  } else {
+    vpnLink.href = "https://kitevpn.net";
+  }
+}
+
 // Global API exposed for other JS controllers
 window.i18n = {
   getLang: () => currentLang,
   t: (key) => getTranslation(key, currentLang),
   tCountry: (code) => getLocalizedCountryName(code, currentLang),
+  initVpnAd: initVpnAd,
   setLang: (lang) => {
     if (TRANSLATIONS[lang]) {
       currentLang = lang;
@@ -558,4 +597,5 @@ function injectLangSelector() {
 document.addEventListener("DOMContentLoaded", () => {
   injectLangSelector();
   updateDOM(currentLang);
+  initVpnAd();
 });
